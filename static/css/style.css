@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-color: rgb(0, 0, 0);
+  background-size: cover;
+  background-position: center;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+}
+
+.logo {
+  font-size: 32px;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: 700;
+  margin-right: 40px;
+  position: relative;
+  cursor: default
+}
+
+.logo::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s;
+}
+
+
+
+.navbar a {
+  position: relative;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: 500;
+  margin-right: 40px;
+}
+
+
+.navbar a::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s;
+}
+
+.navbar a:hover::before {
+  width: 100%;
+}
+
+.navbar .loginBtn {
+  width: 130px;
+  height: 40px;
+  background: transparent;
+  border: 2px solid #fff;
+  text-align: center;
+  vertical-align: center;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  line-height: 35px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-right: 40px;
+  transition: .4s;
+}
+
+.navbar .loginBtn:hover {
+  background-color: #fff;
+  color: rgb(0, 0, 0);
+}
+
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-box {
+    width: 330px; /* Установите желаемую ширину формы */
+    padding: 20px;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-box h2 {
+  color: #fff;
+  text-align: center;
+}
+.input-field {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+
+input[type="email"],
+input[type="password"] {
+    padding-left: 30px; /* Установите отступ слева, чтобы учесть иконку */
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 14px;
+    color: #999;
+}
