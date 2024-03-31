@@ -7,10 +7,11 @@ from sqlalchemy import orm
 
 
 class User(SqlAlchemyBase, UserMixin):
-    __tablename__ = '=users'
+    __tablename__ = 'users'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
+    admin = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
@@ -19,6 +20,8 @@ class User(SqlAlchemyBase, UserMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     modified_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                       default=datetime.datetime.now)
+    jobs = orm.relationship('Ads', back_populates='user')
+
 
 
     def set_password(self, password):
