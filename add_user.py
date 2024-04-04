@@ -8,8 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 user = User()
-user.surname = "Scott"
-user.name = "Ridley"
+user.nickname = "Ridley"
 user.age = 21
 user.hashed_password = '1111'
 user.set_password(user.hashed_password)
@@ -19,8 +18,7 @@ db_sess.add(user)
 db_sess.commit()
 
 user = User()
-user.surname = "Artem"
-user.name = "Maikov"
+user.nickname = "Maikov"
 user.age = 20
 user.hashed_password = '1111'
 user.set_password(user.hashed_password)
@@ -30,8 +28,7 @@ db_sess.add(user)
 db_sess.commit()
 
 user = User()
-user.surname = "Vasya"
-user.name = "Nikonorof"
+user.nickname = "Nikonorof"
 user.age = 22
 user.hashed_password = '1111'
 user.set_password(user.hashed_password)
@@ -41,8 +38,7 @@ db_sess.add(user)
 db_sess.commit()
 
 user = User()
-user.surname = "Firsov"
-user.name = "Dmitry"
+user.nickname = "Dmitry"
 user.age = 23
 user.hashed_password = '1111'
 user.set_password(user.hashed_password)

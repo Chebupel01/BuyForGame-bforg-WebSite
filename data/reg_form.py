@@ -3,8 +3,7 @@ from wtforms import EmailField, PasswordField, BooleanField, SubmitField, String
 from wtforms.validators import DataRequired
 
 class RegForm(FlaskForm):
-    surname = StringField('Фамилия', validators=[DataRequired()])
-    name = StringField('Имя', validators=[DataRequired()])
+    nickname = StringField('Имя пользователя', validators=[DataRequired()])
     age = IntegerField("Возраст", validators=[DataRequired()])
     email = EmailField('Почта', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
