@@ -20,7 +20,7 @@
         </p>
          <p>
             <p>Возраст</p>
-            {{ form.age(class="form-control", type="date") }}
+            {{ form.age(class="form-control") }}
             {% for error in form.age.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
