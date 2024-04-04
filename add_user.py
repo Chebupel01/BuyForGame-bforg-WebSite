@@ -9,6 +9,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 user = User()
 user.nickname = "Ridley"
+user.admin = True
 user.age = 21
 user.hashed_password = '1111'
 user.set_password(user.hashed_password)
