@@ -20,11 +20,14 @@
             <a href="#">Руководства</a>
             <a href="#">О нас</a>
             <a href="{{ url_for('login') }}" class="loginBtn">Авторизация</a>
-            <a href="{{ url_for('login') }}" class="loginBtn">Регистрация</a>
+            <a href="{{ url_for('registration') }}" class="loginBtn">Регистрация</a>
         </nav>
     </header>
+    <br>
 <main>
+    <nav>
     {% block content %}{% endblock %}
+    </nav>
 </main>
 
 </body>

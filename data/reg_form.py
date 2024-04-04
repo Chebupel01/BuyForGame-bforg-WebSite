@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, BooleanField, SubmitField, StringField, IntegerField
 from wtforms.validators import DataRequired
 
+
 class RegForm(FlaskForm):
     nickname = StringField('Имя пользователя', validators=[DataRequired()])
     age = IntegerField("Возраст", validators=[DataRequired()])
