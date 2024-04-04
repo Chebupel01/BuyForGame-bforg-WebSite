@@ -5,7 +5,7 @@ from sqlalchemy import orm
 
 
 class Ads(SqlAlchemyBase):
-    __tablename__ = 'jobs'
+    __tablename__ = 'ads'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
