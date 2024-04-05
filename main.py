@@ -17,6 +17,7 @@ def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -61,6 +62,11 @@ def registration():
         return redirect('/login')
     return render_template('registration.html', title='Зарегистрироваться',
                            form=form)
+
+
+@app.route('/store')
+def store():
+    return render_template('store.html')
 
 
 if __name__ == '__main__':

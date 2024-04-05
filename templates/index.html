@@ -13,21 +13,18 @@
 <body>
     <header class="header">
         <p class="logo">BuyForGame</p>
-
         <nav class="navbar">
             <a href="{{ url_for('home') }}">Главная</a>
-            <a href="#">Магазин</a>
+            <a href="{{ url_for('store') }}">Магазин</a>
             <a href="#">Руководства</a>
             <a href="#">О нас</a>
+            {% if current_user.is_authenticated %}
+            <a href="#">ssssss</a>
+            {% else %}
             <a href="{{ url_for('login') }}" class="loginBtn">Авторизация</a>
+            {% endif %}
         </nav>
     </header>
-    <br>
-<main>
-    <nav>
-    {% block content %}{% endblock %}
-    </nav>
-</main>
-
+{% block content %}{% endblock %}
 </body>
 </html>

@@ -10,7 +10,7 @@ class Ads(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     id_user = sqlalchemy.Column(sqlalchemy.Integer,
-                                    sqlalchemy.ForeignKey("user.id"))
+                                    sqlalchemy.ForeignKey("users.id"))
     id_game = sqlalchemy.Column(sqlalchemy.Integer)
     text = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     product_quantity = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
