@@ -147,9 +147,9 @@ input[type="password"] {
     height: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 10px;
+    margin: 5px;
     margin-left: 10px;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 label {
