@@ -12,6 +12,11 @@ login_manager.init_app(app)
 db_session.global_init('db/db_ads.db')
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(User).get(user_id)
+
 @app.route('/')
 def home():
     return render_template('home.html')
