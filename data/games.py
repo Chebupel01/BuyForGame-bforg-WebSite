@@ -11,5 +11,3 @@ class Games(SqlAlchemyBase):
                            primary_key=True, autoincrement=True)
     id_game = sqlalchemy.Column(sqlalchemy.Integer)
     game_name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-
-
