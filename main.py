@@ -4,13 +4,17 @@ from data.reg_form import RegForm
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 from data import db_session
+from data import ads_api
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'bforg-site_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
 db_session.global_init('db/db_ads.db')
-
+"""api.add_resource(users_resource.UsersListResource, '/api/v2/users')
+api.add_resource(users_resource.UsersResource, '/api/v2/user/<int:user_id>')
+api.add_resource(jobs_resource.JobsResource, '/api/v2/ads/<int:ads_id>')
+api.add_resource(jobs_resource.JobsListResource, '/api/v2/ads')"""
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -113,4 +117,5 @@ def logout():
 
 
 if __name__ == '__main__':
+    app.register_blueprint(ads_api.blueprint)
     app.run(port=5000, host='127.0.0.1')
