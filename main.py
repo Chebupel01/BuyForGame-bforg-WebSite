@@ -69,6 +69,10 @@ def store():
     return render_template('store.html')
 
 
+@app.route('/personal_account')
+def personal_account():
+    return render_template('personal_account.html')
+
 @app.route('/logout')
 @login_required
 def logout():

@@ -22,16 +22,7 @@
             <a href="#">Руководства</a>
             <a href="#">О нас</a>
             {% if current_user.is_authenticated %}
-            <div class="lng">
-            <a href="#" class="lng-link">{{ current_user.nickname }}</a>
-                <div class="lng__list-wrapper"></div>
-                <div class="lng__list">
-                   <a href="#">Личный кабинет</a>
-                   <a href="#">Кошелёк</a>
-                   <a href="{{ url_for('logout') }}">Выйти</a>
-                </div>
-                </div>
-            </div>
+            <a href="{{ url_for('personal_account') }}">{{ current_user.nickname }}</a>
             {% else %}
             <a href="{{ url_for('login') }}" class="loginBtn">Авторизация</a>
             {% endif %}
