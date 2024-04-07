@@ -69,5 +69,12 @@ def store():
     return render_template('store.html')
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+
+
 if __name__ == '__main__':
     app.run(port=5000, host='127.0.0.1')

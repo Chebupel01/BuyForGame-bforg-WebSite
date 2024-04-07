@@ -10,9 +10,6 @@ class Games(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     id_game = sqlalchemy.Column(sqlalchemy.Integer)
-    text = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    product_quantity = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
-    start_date = sqlalchemy.Column(sqlalchemy.DateTime,
-                                   default=datetime.datetime.now)
-    end_date = sqlalchemy.Column(sqlalchemy.DateTime,
-                                 default=datetime.datetime.now)
+    game_name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+
+
