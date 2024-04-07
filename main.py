@@ -1,3 +1,4 @@
+from data.games import Games
 from data.users import User
 from data.login_form import LoginForm
 from data.reg_form import RegForm
@@ -66,7 +67,44 @@ def registration():
 
 @app.route('/store')
 def store():
-    return render_template('store.html')
+    form = Games()
+    db_sess = db_session.create_session()
+    games = db_sess.query(Games).all()
+    games = [game.game_name for game in games]
+    games.sort()
+    return render_template('store.html', games=games)
+
+"""@app.route('/sample_file_upload', methods=['POST', 'GET'])
+def sample_file_upload():
+    if request.method == 'GET':
+        return f'''<!doctype html>
+                        <html lang="en">
+                          <head>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                             <link rel="stylesheet"
+                             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                             crossorigin="anonymous">
+                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
+                            <title>Пример загрузки файла</title>
+                          </head>
+                          <body>
+                            <h1>Загрузим файл</h1>
+                            <img src="static/img/photo.png" class="img-thumbnail" alt=''>
+                            <form method="post" enctype="multipart/form-data">
+                               <div class="form-group">
+                                    <label for="photo">Выберите файл</label>
+                                    <input type="file" class="form-control-file" id="photo" name="file">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </form>
+                          </body>
+                        </html>'''
+    elif request.method == 'POST':
+        f = request.files['file']
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.png'))
+        return "Форма отправлена"""
 
 
 @app.route('/personal_account')

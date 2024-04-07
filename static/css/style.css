@@ -17,7 +17,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 100px;
+  padding: 8px 100px;
+  padding-right: 40px;
   background: transparent;
   display: flex;
   justify-content: space-between;
@@ -82,7 +83,6 @@ body {
   width: 100%;
 }
 
-
 .navbar .loginBtn {
   width: 130px;
   height: 40px;
@@ -107,6 +107,29 @@ body {
   color: rgb(0, 0, 0);
 }
 
+.navbar .user-icon {
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.balance {
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  width: 196px;
+  height: 64px;
+  margin-left: 60px;
+  margin-right: 20px;
+}
+
+.balance p {
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  margin: 0;
+}
 
 .wrapper {
     display: flex;

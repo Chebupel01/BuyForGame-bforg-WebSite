@@ -22,7 +22,12 @@
             <a href="#">Руководства</a>
             <a href="#">О нас</a>
             {% if current_user.is_authenticated %}
-            <a href="{{ url_for('personal_account') }}">{{ current_user.nickname }}</a>
+            <div class="balance">
+                <p>Баланс:</p>
+                <p>0 рублей</p>
+            </div>
+            <img class="user-icon" width="64" height="64" src="static/images/AlbionOnline.png">
+            <a href="{{ url_for('logout') }}">{{ current_user.nickname }}</a>
             {% else %}
             <a href="{{ url_for('login') }}" class="loginBtn">Авторизация</a>
             {% endif %}

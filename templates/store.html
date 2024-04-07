@@ -2,119 +2,22 @@
 {% block content %}
     <h1 class="games-label">Игры</h1>
     <div class="store-body">
+    {% for game in games %}
+    <div class="game-wrapper">
+        <a href="https://htmlacademy.ru">
+            <img class="game-logo" src="static/images/{{ game.replace(' ', '') }}.png">
+        </a>
+        <p class="game-text">{{ game }}</p>
+    </div>
+    {% endfor %}
+    {% if current_user.admin %}
     <div class="game-wrapper">
         <a href="https://htmlacademy.ru">
             <img class="game-logo" src="static/images/AddGameIcon.png">
         </a>
         <p class="game-text">Добавить игру</p>
     </div>
-    <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
+    {% endif %}
     </div>
-    <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-    <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-    <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-    <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-    <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-    <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-        <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
-        </a>
-        <p class="game-text">Добавить игру</p>
-    </div>
-</div>
+
 {% endblock %}
