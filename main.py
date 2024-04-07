@@ -7,10 +7,10 @@ from flask_login import LoginManager, login_manager, login_user, logout_user, lo
 from data import db_session
 from data import ads_api
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'bforg-site_secret_key'
+application = Flask(__name__)
+application.config['SECRET_KEY'] = 'bforg-site_secret_key'
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(application)
 db_session.global_init('db/db_ads.db')
 """api.add_resource(users_resource.UsersListResource, '/api/v2/users')
 api.add_resource(users_resource.UsersResource, '/api/v2/user/<int:user_id>')
@@ -23,12 +23,12 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
-@app.route('/')
+@application.route('/')
 def home():
     return render_template('home.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -43,7 +43,7 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route('/registration', methods=['GET', 'POST'])
+@application.route('/registration', methods=['GET', 'POST'])
 def registration():
     form = RegForm()
     db_sess = db_session.create_session()
@@ -69,7 +69,7 @@ def registration():
                            form=form)
 
 
-@app.route('/store')
+@application.route('/store')
 def store():
     form = Games()
     db_sess = db_session.create_session()
@@ -110,7 +110,7 @@ def sample_file_upload():
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.png'))
         return "Форма отправлена"""
 
-@app.route('/sample_file_upload', methods=['POST', 'GET'])
+@application.route('/sample_file_upload', methods=['POST', 'GET'])
 def sample_file_upload():
     if request.method == 'GET':
         return f'''<!doctype html>
@@ -143,11 +143,11 @@ def sample_file_upload():
         return "Форма отправлена"
 
 
-@app.route('/personal_account')
+@application.route('/personal_account')
 def personal_account():
     return render_template('personal_account.html')
 
-@app.route('/logout')
+@application.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -155,5 +155,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.register_blueprint(ads_api.blueprint)
-    app.run(port=5000, host='127.0.0.1')
+    application.register_blueprint(ads_api.blueprint)
+    application.run(port=5000, host='127.0.0.1')
