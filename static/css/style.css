@@ -235,4 +235,29 @@ input[type="password"] {
    font-family: "Poppins", sans-serif;
 }
 
+.product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 2px #6D6552;
+  background: transparent;
+  width: 1000px;
+  height: 70px;
+  box-shadow: 0px 1px 2px 0px rgba(0,255,255,0.45),
+            1px 2px 4px 0px rgba(0,255,255,0.45),
+            2px 4px 8px 0px rgba(0,255,255,0.45),
+            2px 4px 16px 0px rgba(0,255,255,0.45);
+}
 
+.btn:before {
+  content: "";
+  position: absolute;
+  opacity: 0;
+  transition: .5s;
+}
+
+.btn:hover:before {
+  filter: blur(20px);
+  opacity: 1;
+  animation: animate 8s linear infinite;
+}
