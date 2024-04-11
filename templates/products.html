@@ -1,7 +1,18 @@
 {% extends "index.html" %}
 {% block content %}
     <h1 class="games-label">Товары {{ game.game_name }}</h1>
-    <div class="product">
-        <p>FFFFFFFFFFF</p>
+    <div class="store-body">
+        <div class="product">
+            <span>{{ sort_method }}</span>
+        <div class="dropdown">
+            <span>Сортировать по:</span>
+            <div class="dropdown-content">
+                <a href="#">Рейтингу продавцов</a><br>
+                <a href="#">Дате выставления</a><br>
+                <a href="#">Возрастанию цены</a><br>
+                <a href="#">Убыванию цены</a>
+            </div>
+        </div>
+    </div>
     </div>
 {% endblock %}
