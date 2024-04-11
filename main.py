@@ -168,4 +168,4 @@ def logout():
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
-    application.run(port=5000, host='127.0.0.1')
+    serve(application, port=5000, host='0.0.0.0')
