@@ -1,3 +1,6 @@
+from waitress import serve
+
+from data.ads import Ads
 from data.games import Games
 from data.users import User
 from data.login_form import LoginForm
@@ -6,7 +9,6 @@ from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 from data import db_session
 from data import ads_api
-from waitress import serve
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = 'bforg-site_secret_key'
@@ -17,6 +19,7 @@ db_session.global_init('db/db_ads.db')
 api.add_resource(users_resource.UsersResource, '/api/v2/user/<int:user_id>')
 api.add_resource(jobs_resource.JobsResource, '/api/v2/ads/<int:ads_id>')
 api.add_resource(jobs_resource.JobsListResource, '/api/v2/ads')"""
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -72,12 +75,21 @@ def registration():
 
 @application.route('/store')
 def store():
-    form = Games()
     db_sess = db_session.create_session()
     games = db_sess.query(Games).all()
-    games = [game.game_name for game in games]
-    games.sort()
+    games = [[game.game_name, game.id] for game in games]
+    games.sort(key=lambda x: x[0])
+    print(games)
     return render_template('store.html', games=games)
+
+
+@application.route('/store/<int:id>')
+def products(id):
+    ads = Ads()
+    db_sess = db_session.create_session()
+    game = db_sess.query(Games).filter(Games.id == id).first()
+    return render_template('products.html', ads=ads, game=game)
+
 
 """@app.route('/sample_file_upload', methods=['POST', 'GET'])
 def sample_file_upload():
@@ -111,7 +123,7 @@ def sample_file_upload():
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.png'))
         return "Форма отправлена"""
 
-@application.route('/sample_file_upload', methods=['POST', 'GET'])
+"""@application.route('/sample_file_upload', methods=['POST', 'GET'])
 def sample_file_upload():
     if request.method == 'GET':
         return f'''<!doctype html>
@@ -141,12 +153,13 @@ def sample_file_upload():
     elif request.method == 'POST':
         f = request.files['file']
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.png'))
-        return "Форма отправлена"
+        return "Форма отправлена"""
 
 
 @application.route('/personal_account')
 def personal_account():
     return render_template('personal_account.html')
+
 
 @application.route('/logout')
 @login_required
@@ -157,4 +170,4 @@ def logout():
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
-    serve(application,  host='0.0.0.0', port=5000)
+    serve(application, port=5000, host='0.0.0.0')
