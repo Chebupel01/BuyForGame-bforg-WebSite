@@ -4,8 +4,8 @@
 <div class="store-body">
     {% for game in games %}
     <div class="game-wrapper">
-        <a href="{{ url_for('products', id=game[1]) }}">
-            <img class="game-logo" src="static/images/{{ game[0].replace(' ', '') }}.png">
+        <a href="{{ url_for('products', id=game[1]) }}?sort_by=date_added&store_format=cards">
+            <img class="game-logo" src="static/images/games-icons/{{ game[0].replace(' ', '') }}.png">
         </a>
         <p class="game-text">{{ game[0] }}</p>
     </div>
@@ -13,7 +13,7 @@
     {% if current_user.admin %}
     <div class="game-wrapper">
         <a href="https://htmlacademy.ru">
-            <img class="game-logo" src="static/images/AddGameIcon.png">
+            <img class="game-logo" src="static/images/system-images/AddGameIcon.png">
         </a>
         <p class="game-text">Добавить игру</p>
     </div>

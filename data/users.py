@@ -13,11 +13,11 @@ class User(SqlAlchemyBase, UserMixin):
                            primary_key=True, autoincrement=True)
     admin = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
     nickname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
-    balance = sqlalchemy.Column(sqlalchemy.Integer,
-                           default=0)
+    balance = sqlalchemy.Column(sqlalchemy.Integer, default=0)
+    seller_rating = sqlalchemy.Column(sqlalchemy.Integer, default=0)
+    user_icon = sqlalchemy.Column(sqlalchemy.String, nullable=True, default='default-icon.png')
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     modified_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                       default=datetime.datetime.now)

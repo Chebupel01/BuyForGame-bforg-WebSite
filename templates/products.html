@@ -2,17 +2,75 @@
 {% block content %}
     <h1 class="games-label">Товары {{ game.game_name }}</h1>
     <div class="store-body">
-        <div class="product">
-            <span>{{ sort_method }}</span>
-        <div class="dropdown">
-            <span>Сортировать по:</span>
-            <div class="dropdown-content">
-                <a href="#">Рейтингу продавцов</a><br>
-                <a href="#">Дате выставления</a><br>
-                <a href="#">Возрастанию цены</a><br>
-                <a href="#">Убыванию цены</a>
+        <div class="sort-bar">
+            <div class="sort">
+            <span class="sort-label">Сортировать по: </span>
+            <div class="dropdown">
+                {% if sort_by == 'seller_rating' %}
+                <span class="sort-method">Рейтингу продавцов</span>
+                {% elif sort_by == 'date_added' %}
+                <span class="sort-method">Дате выставления</span>
+                {% elif sort_by == 'price_asc' %}
+                <span class="sort-method">Возрастанию цены</span>
+                {% elif sort_by == 'price_desc' %}
+                <span class="sort-method">Убыванию цены</span>
+                {% endif %}
+                <div class="dropdown-content">
+                    <a href="?sort_by=seller_rating&store_format={{store_format}}">Рейтингу продавцов</a><br>
+                    <a href="?sort_by=date_added&store_format={{store_format}}">Дате выставления</a><br>
+                    <a href="?sort_by=price_asc&store_format={{store_format}}">Возрастанию цены</a><br>
+                    <a href="?sort_by=price_desc&store_format={{store_format}}">Убыванию цены</a>
+                </div>
+            </div>
+            </div>
+            <div class="store-format">
+            <div><a href="?sort_by={{sort_by}}&store_format=cards"><ion-icon class="sort-icon" name="grid-outline"></ion-icon></a></div>
+            <div><a href="?sort_by={{sort_by}}&store_format=table"><ion-icon class="sort-icon" name="menu-outline"></ion-icon></a></div>
             </div>
         </div>
-    </div>
+        {% if store_format == 'cards' %}
+        {% for product in products %}
+        <div class="connect-product">
+        <div class="product-wrapper">
+            <a href="{{ url_for('product', id=product.id) }}"><img class="product-photo" src="/static/images/users-products/1&1.jpg"></a>
+        </div>
+            <div>
+                <img class="seller-icon" src="/static/images/users-icons/{{ product.user.user_icon }}">
+                <span class="product-label">{{ product.name }}</span>
+            </div>
+            <div>
+                <span class="product-label">Рейтинг: {{ product.user.seller_rating }}/5</span>
+                <span class="product-label">Цена: {{ product.price }} за шт.</span>
+            </div>
+        </div>
+        {% endfor %}
+        {% elif store_format == 'table' %}
+        <table class="products-table">
+            <thead>
+              <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Дата</th>
+                <th>Продавец</th>
+                <th>Рейтинг продавца</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+              <tr>
+                <td><a href="{{ url_for('product', id=product.id) }}">{{ product.name }}</a></td>
+                <td><a href="{{ url_for('product', id=product.id) }}">{{ product.description }}</a></td>
+                <td>{{ product.product_quantity }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.date }}</td>
+                <td><a href="#">{{ product.user.nickname }}</a></td>
+                <td>{{ product.user.seller_rating }}/5</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
 {% endblock %}

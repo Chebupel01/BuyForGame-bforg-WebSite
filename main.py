@@ -5,10 +5,11 @@ from data.games import Games
 from data.users import User
 from data.login_form import LoginForm
 from data.reg_form import RegForm
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 from data import db_session
 from data import ads_api
+from sqlalchemy import asc, desc
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = 'bforg-site_secret_key'
@@ -79,17 +80,33 @@ def store():
     games = db_sess.query(Games).all()
     games = [[game.game_name, game.id] for game in games]
     games.sort(key=lambda x: x[0])
-    print(games)
     return render_template('store.html', games=games)
 
 
 @application.route('/store/<int:id>')
 def products(id):
+    store_format = request.args.get('store_format')
+    sort_by = request.args.get('sort_by')
     ads = Ads()
     db_sess = db_session.create_session()
     game = db_sess.query(Games).filter(Games.id == id).first()
-    return render_template('products.html', ads=ads, game=game)
+    if sort_by == 'price_asc':
+        products = db_sess.query(Ads).filter(Ads.id_game == id).order_by(asc(Ads.price)).all()
+    elif sort_by == 'price_desc':
+        products = db_sess.query(Ads).filter(Ads.id_game == id).order_by(desc(Ads.price)).all()
+    elif sort_by == 'date_added':
+        products = db_sess.query(Ads).filter(Ads.id_game == id).order_by(desc(Ads.date)).all()
+    elif sort_by == 'seller_rating':
+        products = db_sess.query(Ads).join(User).filter(Ads.id_game == id).order_by(desc(User.seller_rating)).all()
+    return render_template('products.html', ads=ads, game=game, sort_by=sort_by, store_format=store_format,
+                           products=products)
 
+
+@application.route('/product/<int:id>')
+def product(id):
+    db_sess = db_session.create_session()
+    product = db_sess.query(Ads).filter(Ads.id == id).first()
+    return render_template('product.html', product=product)
 
 """@app.route('/sample_file_upload', methods=['POST', 'GET'])
 def sample_file_upload():
@@ -170,4 +187,5 @@ def logout():
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
+    application.run(port=5000, host='127.0.0.1')
     serve(application, port=5000, host='0.0.0.0')

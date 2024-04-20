@@ -19,15 +19,6 @@
             {% endfor %}
         </p>
          <p>
-            <p>Возраст</p>
-            {{ form.age(class="form-control") }}
-            {% for error in form.age.errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endfor %}
-        </p>
-         <p>
             <p>Почта</p>
             {{ form.email(class="form-control") }}
             {% for error in form.email.errors %}

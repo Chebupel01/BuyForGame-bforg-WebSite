@@ -10,6 +10,8 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
     <title>BuyForGame</title>
 </head>
@@ -26,7 +28,7 @@
                 <p>Баланс:</p>
                 <p>0 рублей</p>
             </div>
-            <img class="user-icon" width="64" height="64" src="static/images/AlbionOnline.png">
+            <img class="user-icon" src="/static/images/users-icons/default-icon.png">
             <a href="{{ url_for('logout') }}">{{ current_user.nickname }}</a>
             {% else %}
             <a href="{{ url_for('login') }}" class="loginBtn">Авторизация</a>
@@ -34,5 +36,8 @@
         </nav>
     </header>
 {% block content %}{% endblock %}
+<a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+  <img src="https://cdn.freekassa.ru/banners/small-white-2.png" title="Receving payments">
+</a>
 </body>
 </html>
