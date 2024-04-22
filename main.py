@@ -1,5 +1,5 @@
 from waitress import serve
-
+from flask_restful import Api
 from data.ads import Ads
 from data.games import Games
 from data.users import User
@@ -10,16 +10,16 @@ from flask_login import LoginManager, login_manager, login_user, logout_user, lo
 from data import db_session
 from data import ads_api
 from sqlalchemy import asc, desc
+from data import user_api as users_resource
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = 'bforg-site_secret_key'
+api = Api(application)
 login_manager = LoginManager()
 login_manager.init_app(application)
 db_session.global_init('db/db_ads.db')
-"""api.add_resource(users_resource.UsersListResource, '/api/v2/users')
-api.add_resource(users_resource.UsersResource, '/api/v2/user/<int:user_id>')
-api.add_resource(jobs_resource.JobsResource, '/api/v2/ads/<int:ads_id>')
-api.add_resource(jobs_resource.JobsListResource, '/api/v2/ads')"""
+api.add_resource(users_resource.UsersListResource, '/api/users')
+api.add_resource(users_resource.UsersResource, '/api/user/<int:user_id>')
 
 
 @login_manager.user_loader
