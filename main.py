@@ -14,6 +14,8 @@ from data import user_api as users_resource
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = 'bforg-site_secret_key'
+UPLOAD_FOLDER = 'static/images/users-icons'
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 api = Api(application)
 login_manager = LoginManager()
 login_manager.init_app(application)
@@ -173,8 +175,11 @@ def sample_file_upload():
 
 
 @application.route('/personal_account')
+@login_required
 def personal_account():
-    return render_template('personal_account.html')
+    db_sess = db_session.create_session()
+    profile = db_sess.query(User).filter(User.id == id).first()
+    return render_template('personal_account.html', profile=profile)
 
 
 @application.route('/logout')
@@ -182,6 +187,15 @@ def personal_account():
 def logout():
     logout_user()
     return redirect("/")
+
+@application.route('/upload_photo/<int:id>')
+def upload(id):
+    f = request.files['file']
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], f'icon-{id}.png'))
+    profile = db_sess.query(User).filter(User.id == id, current_user.id == User.id).first()
+    if profile['user-icon'] == 'default-icon.png':
+        profile['user-icon'] =  f'icon-{id}.png'
+        db_sess.commit()
 
 
 if __name__ == '__main__':
