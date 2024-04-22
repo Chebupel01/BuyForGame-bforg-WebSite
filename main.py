@@ -63,7 +63,6 @@ def registration():
         db_sess = db_session.create_session()
         user = User()
         user.nickname = form.nickname.data
-        user.age = form.age.data
         user.email = form.email.data
         user.hashed_password = form.password.data
         user.set_password(user.hashed_password)

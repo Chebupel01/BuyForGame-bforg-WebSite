@@ -390,6 +390,11 @@ input[type="password"] {
   height: 48px;
   border-radius: 50%;
   margin-right: 3px;
+  transition: transform 0.3s;
+}
+
+.seller-icon:hover {
+  transform: scale(1.1);
 }
 
 .products-table {
@@ -533,6 +538,8 @@ td:hover a {
   margin-left: 15px;
   color: #fff;
   margin: 7px;
+  padding: 2px;
+  padding-left: 10px;
 }
 
 @keyframes glow {
@@ -567,6 +574,8 @@ td:hover a {
   border-radius: 3px;
   border: 1px solid #fff;
   margin-right: 10px;
+  padding: 2px;
+  padding-left: 10px;
 }
 
 .buy-button {
