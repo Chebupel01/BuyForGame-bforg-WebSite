@@ -174,7 +174,7 @@ def sample_file_upload():
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.png'))
         return "Форма отправлена"""
 
-
+'''******'''
 @application.route('/personal_account')
 @login_required
 def personal_account():
@@ -189,7 +189,7 @@ def logout():
     logout_user()
     return redirect("/")
 
-
+'''******'''
 @application.route('/upload_photo/<int:id>')
 def upload(id):
     f = request.files['file']
@@ -199,6 +199,13 @@ def upload(id):
         profile['user-icon'] = f'icon-{id}.png'
         db_sess.commit()
 
+
+'''******'''
+@application.route('/search/<str:game>')
+def search():
+    db_sess = db_session.create_session()
+    profile = db_sess.query(Games).filter(Games.game_name == name).first()
+    return render_template('personal_account.html', profile=profile)
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
