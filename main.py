@@ -109,6 +109,7 @@ def product(id):
     product = db_sess.query(Ads).filter(Ads.id == id).first()
     return render_template('product.html', product=product)
 
+
 """@app.route('/sample_file_upload', methods=['POST', 'GET'])
 def sample_file_upload():
     if request.method == 'GET':
@@ -188,13 +189,14 @@ def logout():
     logout_user()
     return redirect("/")
 
+
 @application.route('/upload_photo/<int:id>')
 def upload(id):
     f = request.files['file']
     f.save(os.path.join(app.config['UPLOAD_FOLDER'], f'icon-{id}.png'))
     profile = db_sess.query(User).filter(User.id == id, current_user.id == User.id).first()
     if profile['user-icon'] == 'default-icon.png':
-        profile['user-icon'] =  f'icon-{id}.png'
+        profile['user-icon'] = f'icon-{id}.png'
         db_sess.commit()
 
 
