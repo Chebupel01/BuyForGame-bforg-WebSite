@@ -32,7 +32,7 @@ def load_user(user_id):
 
 @application.route('/')
 def home():
-    text_for_home = ''''''
+    text_for_home = '''Тут кароче будет текст для только что зашедших пользователей'''
     return render_template('home.html')
 
 
