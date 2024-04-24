@@ -236,7 +236,7 @@ def logout():
     logout_user()
     return redirect("/")
 
-'''******'''
+'''******
 @application.route('/upload_photo/<int:id>')
 def upload(id):
     f = request.files['file']
@@ -244,7 +244,7 @@ def upload(id):
     profile = db_sess.query(User).filter(User.id == id, current_user.id == User.id).first()
     if profile['user-icon'] == 'default-icon.png':
         profile['user-icon'] = f'icon-{id}.png'
-        db_sess.commit()
+        db_sess.commit()'''
 
 
 '''******
