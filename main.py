@@ -254,7 +254,7 @@ def search():
     profile = db_sess.query(Games).filter(Games.game_name == name).first()
     return render_template('personal_account.html', profile=profile)'''
 
-@application.route('/about_us')
+"""@application.route('/about_us')
 def about():
     text = '''Приветствую всех тех кто зашел прочесть это сообщение!
 Мы писали эту программу своей кровью и потом.
@@ -263,7 +263,7 @@ def about():
 но я считаю что не плохой для своего первого сайта.
 А вообще мы с васей ленивые ишаки.
 p.s. Человек на фото это михал николаич, который сам попросился в программу'''
-    return render_template('about.html', text=text)
+    return render_template('about.html', text=text)"""
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
