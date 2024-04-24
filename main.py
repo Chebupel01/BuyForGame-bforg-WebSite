@@ -11,7 +11,7 @@ from data.message_form import MesForm
 from data.users import User
 from data.login_form import LoginForm
 from data.reg_form import RegForm
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, current_app
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 from data import db_session
 from data import ads_api
