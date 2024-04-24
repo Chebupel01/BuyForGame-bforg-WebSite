@@ -13,6 +13,21 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+    <script>
+        function redirectToPage() {
+            window.location.href = '/chats';
+        }
+    </script>
+    <script>
+        function redirectToChat(url) {
+            window.location.href = url;
+        }
+    </script>
+    <script>
+        function resetMessage() {
+            document.getElementById('myForm').reset(); // Сброс значений всех полей формы
+        }
+    </script>
     <title>BuyForGame</title>
 </head>
 <body>
@@ -30,11 +45,15 @@
             </div>
             <img class="user-icon" src="/static/images/users-icons/default-icon.png">
             <a href="{{ url_for('logout') }}">{{ current_user.nickname }}</a>
+            <div class="fg">
+            <button class="chat-button" onclick="redirectToPage()"><ion-icon class="sort-icon" name="chatbox-ellipses-outline"></ion-icon></button>
+            </div>
             {% else %}
             <a href="{{ url_for('login') }}" class="loginBtn">Авторизация</a>
             {% endif %}
         </nav>
     </header>
+
 {% block content %}{% endblock %}
 <a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
   <img src="https://cdn.freekassa.ru/banners/small-white-2.png" title="Receving payments">

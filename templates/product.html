@@ -3,29 +3,48 @@
 <h1 class="games-label">Оформление заказа</h1>
 <div class="store-body">
     <div class="product-review-wrapper">
-    <div class="product-description">
-    <span class="product-name">Товар: {{ product.name }}</span>
-    <br>
-    <span class="product-count">В наличии: {{product.product_quantity}}</span>
-    <br>
-    <span class="full-description">Полное описание: <br>{{ product.description }}</span>
-    <br>
-    <span class="count-text">Цена за шт: {{ product.price }} руб.</span>
-    <br>
-    <span class="count-text">Купить: <input class="buy-count" type="number"> шт.</span><button class="buy-button">Купить</button>
-    </div>
-
+        <div class="product-description">
+            <span class="product-name">Товар: {{ product.name }}</span>
+            <br>
+            <span class="product-count">В наличии: {{ product.product_quantity }}</span>
+            <br>
+            <span class="full-description">Полное описание: <br>{{ product.description }}</span>
+            <br>
+            <span class="count-text">Цена за шт: {{ product.price }} руб.</span>
+            <br>
+            <span class="count-text">Купить: <input class="buy-count" type="number"> шт.</span><button class="buy-button">Купить</button>
+        </div>
     </div>
     <div class="chat-wrapper">
         <h3 class="chat-label">Чат с продавцом</h3>
         <div class="chat">
+            {% for mes in messages %}
+                {% if current_user.id == mes.split(':', 2)[1] | int %}
+                    <div class="current-user-wrapper">
+                        <span class="current-user-message">{{ mes.split(':', 2)[-1] }}</span><a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><br>
+                    </div>
+                {% elif product.id_user == mes.split(':', 2)[1] | int %}
+                    <div class="seller-user-wrapper">
+                        <a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><span class="seller-user-message">{{ mes.split(':', 2)[-1] }}</span><br>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
         <div class="message-field">
-            <input class="message-input" type="text">
-            <div>
-            <button class="send-button"><ion-icon class="send-icon" name="arrow-forward-circle"></ion-icon></button>
-            </div>
+            {% if current_user.is_authenticated %}
+                <form id="myForm" class="message-form" method="post" action="" onsubmit="">
+                    {{ form.hidden_tag() }}
+                    {{ form.message(class="message-input") }}
+                    <div>
+                        <button type="submit" class="send-button"><ion-icon class="send-icon" name="arrow-forward-circle"></ion-icon></button>
+                    </div>
+                </form>
+                <button class="send-button" onclick="redirectToChat({{ product.id }})">
+                    <ion-icon class="send-icon" name="sync-outline"></ion-icon>
+                </button>
+            {% endif %}
         </div>
     </div>
 </div>
+
 {% endblock %}
