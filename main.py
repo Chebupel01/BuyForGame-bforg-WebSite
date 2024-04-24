@@ -197,7 +197,7 @@ def chat(id):
             messages = file.readlines()
     current_url = request.url
     form.message.data = ''
-    directory = 'C:/Users/miron/PycharmProjects/BuyForGame-bforg-WebSite/static/chats'
+    directory = 'static/chats'
     files = os.listdir(directory)
     chats = []
     db_sess = db_session.create_session()
