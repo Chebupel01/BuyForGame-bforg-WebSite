@@ -146,7 +146,7 @@ def product(id):
 
 @application.route('/chats')
 def chats():
-    directory = 'C:/Users/miron/PycharmProjects/BuyForGame-bforg-WebSite/static/chats'
+    directory = os.path.join(current_app.root_path, 'static', 'chats')
     files = os.listdir(directory)
     chats = []
     db_sess = db_session.create_session()
@@ -197,7 +197,7 @@ def chat(id):
             messages = file.readlines()
     current_url = request.url
     form.message.data = ''
-    directory = 'C:/Users/miron/PycharmProjects/BuyForGame-bforg-WebSite/static/chats'
+    directory = os.path.join(current_app.root_path, 'static', 'chats')
     files = os.listdir(directory)
     chats = []
     db_sess = db_session.create_session()
