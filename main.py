@@ -32,6 +32,7 @@ def load_user(user_id):
 
 @application.route('/')
 def home():
+    text_for_home = ''''''
     return render_template('home.html')
 
 
@@ -206,6 +207,17 @@ def search():
     db_sess = db_session.create_session()
     profile = db_sess.query(Games).filter(Games.game_name == name).first()
     return render_template('personal_account.html', profile=profile)
+
+@application.route('/about_us')
+def about():
+    text = '''Приветствую всех тех кто зашел прочесть это сообщение!
+Мы писали эту программу своей кровью и потом.
+Но чаще чем это играли в доту,
+поэтому сайт не прям пушка,
+но я считаю что не плохой для своего первого сайта.
+А вообще мы с васей ленивые ишаки.
+p.s. Человек на фото это михал николаич, который сам попросился в программу'''
+    return render_template('about.html', text=text)
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
