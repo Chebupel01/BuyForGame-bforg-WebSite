@@ -4,6 +4,7 @@ import requests
 from sqlalchemy.orm import joinedload
 from waitress import serve
 import datetime
+from flask_restful import Api
 from data.ads import Ads
 from data.games import Games
 from data.message_form import MesForm
@@ -15,16 +16,18 @@ from flask_login import LoginManager, login_manager, login_user, logout_user, lo
 from data import db_session
 from data import ads_api
 from sqlalchemy import asc, desc
+from data import user_api as users_resource
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = 'bforg-site_secret_key'
+UPLOAD_FOLDER = 'static/images/users-icons'
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+api = Api(application)
 login_manager = LoginManager()
 login_manager.init_app(application)
 db_session.global_init('db/db_ads.db')
-"""api.add_resource(users_resource.UsersListResource, '/api/v2/users')
-api.add_resource(users_resource.UsersResource, '/api/v2/user/<int:user_id>')
-api.add_resource(jobs_resource.JobsResource, '/api/v2/ads/<int:ads_id>')
-api.add_resource(jobs_resource.JobsListResource, '/api/v2/ads')"""
+api.add_resource(users_resource.UsersListResource, '/api/users')
+api.add_resource(users_resource.UsersResource, '/api/user/<int:user_id>')
 
 
 @login_manager.user_loader
@@ -35,6 +38,7 @@ def load_user(user_id):
 
 @application.route('/')
 def home():
+    text_for_home = '''Тут кароче будет текст для только что зашедших пользователей'''
     return render_template('home.html')
 
 
@@ -221,7 +225,9 @@ def chat(id):
 
 @application.route('/personal_account')
 def personal_account():
-    return render_template('personal_account.html')
+    db_sess = db_session.create_session()
+    profile = db_sess.query(User).filter(User.id == id).first()
+    return render_template('personal_account.html', profile=profile)
 
 
 @application.route('/logout')
@@ -230,6 +236,34 @@ def logout():
     logout_user()
     return redirect("/")
 
+'''******'''
+@application.route('/upload_photo/<int:id>')
+def upload(id):
+    f = request.files['file']
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], f'icon-{id}.png'))
+    profile = db_sess.query(User).filter(User.id == id, current_user.id == User.id).first()
+    if profile['user-icon'] == 'default-icon.png':
+        profile['user-icon'] = f'icon-{id}.png'
+        db_sess.commit()
+
+
+'''******'''
+@application.route('/search/<str:game>')
+def search():
+    db_sess = db_session.create_session()
+    profile = db_sess.query(Games).filter(Games.game_name == name).first()
+    return render_template('personal_account.html', profile=profile)
+
+@application.route('/about_us')
+def about():
+    text = '''Приветствую всех тех кто зашел прочесть это сообщение!
+Мы писали эту программу своей кровью и потом.
+Но чаще чем это играли в доту,
+поэтому сайт не прям пушка,
+но я считаю что не плохой для своего первого сайта.
+А вообще мы с васей ленивые ишаки.
+p.s. Человек на фото это михал николаич, который сам попросился в программу'''
+    return render_template('about.html', text=text)
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
