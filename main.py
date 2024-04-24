@@ -1,7 +1,12 @@
-from waitress import serve
+import os
 
+import requests
+from sqlalchemy.orm import joinedload
+from waitress import serve
+import datetime
 from data.ads import Ads
 from data.games import Games
+from data.message_form import MesForm
 from data.users import User
 from data.login_form import LoginForm
 from data.reg_form import RegForm
@@ -73,7 +78,7 @@ def registration():
                            form=form)
 
 
-@application.route('/store')
+@application.route('/store', methods=['GET', 'POST'])
 def store():
     db_sess = db_session.create_session()
     games = db_sess.query(Games).all()
@@ -101,75 +106,117 @@ def products(id):
                            products=products)
 
 
-@application.route('/product/<int:id>')
+@application.route('/product/<int:id>', methods=['GET', 'POST'])
 def product(id):
+    form = MesForm()
     db_sess = db_session.create_session()
     product = db_sess.query(Ads).filter(Ads.id == id).first()
-    return render_template('product.html', product=product)
+    message = form.message.data
+    try:
+        directory = os.path.join(os.getcwd(), 'static', 'chats')
+        users = [current_user.id, product.user.id]
+        filename = f'{min(users)}-{max(users)}.txt'
+        filepath = os.path.join(directory, filename)
+        with open(filepath, 'r', encoding='utf-8') as file:
+            messages = file.readlines()
+    except Exception:
+        messages = []
+    if message:
+        directory = os.path.join(os.getcwd(), 'static', 'chats')
+        filename = f'{min(users)}-{max(users)}.txt'
+        filepath = os.path.join(directory, filename)
+        try:
+            with open(filepath, 'r', encoding='utf-8') as file:
+                messages = file.readlines()
+            with open(filepath, "w", encoding='utf-8') as file:
+                messages.append(f'cur:{current_user.id}:' + message + '\n')
+                file.writelines(messages)
+        except Exception:
+            with open(filepath, "a+", encoding='utf-8') as file:
+                file.write(f'cur:{current_user.id}:' + message + '\n')
+                messages = [f'cur:{current_user.id}:' + message + '\n']
+    form.message.data = ''
+    return render_template('product.html', product=product, message=message, messages=messages[::-1],
+                           form=form)
 
-"""@app.route('/sample_file_upload', methods=['POST', 'GET'])
-def sample_file_upload():
-    if request.method == 'GET':
-        return f'''<!doctype html>
-                        <html lang="en">
-                          <head>
-                            <meta charset="utf-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                             <link rel="stylesheet"
-                             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                             crossorigin="anonymous">
-                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
-                            <title>Пример загрузки файла</title>
-                          </head>
-                          <body>
-                            <h1>Загрузим файл</h1>
-                            <img src="static/img/photo.png" class="img-thumbnail" alt=''>
-                            <form method="post" enctype="multipart/form-data">
-                               <div class="form-group">
-                                    <label for="photo">Выберите файл</label>
-                                    <input type="file" class="form-control-file" id="photo" name="file">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Отправить</button>
-                            </form>
-                          </body>
-                        </html>'''
-    elif request.method == 'POST':
-        f = request.files['file']
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.png'))
-        return "Форма отправлена"""
 
-"""@application.route('/sample_file_upload', methods=['POST', 'GET'])
-def sample_file_upload():
-    if request.method == 'GET':
-        return f'''<!doctype html>
-                        <html lang="en">
-                          <head>
-                            <meta charset="utf-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                             <link rel="stylesheet"
-                             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                             crossorigin="anonymous">
-                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
-                            <title>Пример загрузки файла</title>
-                          </head>
-                          <body>
-                            <h1>Загрузим файл</h1>
-                            <img src="static/img/photo.png" class="img-thumbnail" alt=''>
-                            <form method="post" enctype="multipart/form-data">
-                               <div class="form-group">
-                                    <label for="photo">Выберите файл</label>
-                                    <input type="file" class="form-control-file" id="photo" name="file">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Отправить</button>
-                            </form>
-                          </body>
-                        </html>'''
-    elif request.method == 'POST':
-        f = request.files['file']
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.png'))
-        return "Форма отправлена"""
+@application.route('/chats')
+def chats():
+    directory = 'C:/Users/miron/PycharmProjects/BuyForGame-bforg-WebSite/static/chats'
+    files = os.listdir(directory)
+    chats = []
+    db_sess = db_session.create_session()
+    for file in files:
+        file_name = file
+        file = file.split('.')
+        if int(file[0].split('-')[0]) == current_user.id or int(file[0].split('-')[1]) == current_user.id:
+            ids = [int(file[0].split('-')[0]), int(file[0].split('-')[1])]
+            ids.remove(current_user.id)
+            ids = int(ids[0])
+            user = db_sess.query(User).filter(User.id == ids).first()
+            filepath = directory + '/' + file_name
+            with open(filepath, 'r', encoding='utf-8') as file:
+                messages = file.readlines()
+            if messages:
+                chats.append(
+                    [datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime("%d %B %Y %H:%M"), user,
+                     messages[-1].split(':', 2)[-1], int(messages[-1].split(':', 2)[1]),
+                     ids])
+        chats.sort(key=lambda x: x[0], reverse=True)
+    print(chats)
+    return render_template('chats.html', chats=chats)
+
+
+@application.route('/chat/<int:id>', methods=['GET', 'POST'])
+def chat(id):
+    messages = []
+    form = MesForm()
+    db_sess = db_session.create_session()
+    product = db_sess.query(Ads).options(joinedload(Ads.user)).filter(Ads.id == id).first()
+    message = form.message.data
+    if message:
+        users = [current_user.id, id]
+        directory = os.path.join(os.getcwd(), 'static', 'chats')
+        filename = f'{min(users)}-{max(users)}.txt'
+        filepath = os.path.join(directory, filename)
+        with open(filepath, 'r', encoding='utf-8') as file:
+            messages = file.readlines()
+        with open(filepath, "w", encoding='utf-8') as file:
+            messages.append(f'cur:{current_user.id}:' + message + '\n')
+            file.writelines(messages)
+    else:
+        directory = os.path.join(os.getcwd(), 'static', 'chats')
+        users = [current_user.id, id]
+        filename = f'{min(users)}-{max(users)}.txt'
+        filepath = os.path.join(directory, filename)
+        with open(filepath, 'r', encoding='utf-8') as file:
+            messages = file.readlines()
+    current_url = request.url
+    form.message.data = ''
+    directory = 'C:/Users/miron/PycharmProjects/BuyForGame-bforg-WebSite/static/chats'
+    files = os.listdir(directory)
+    chats = []
+    db_sess = db_session.create_session()
+    for file in files:
+        file_name = file
+        file = file.split('.')
+        if int(file[0].split('-')[0]) == current_user.id or int(file[0].split('-')[1]) == current_user.id:
+            ids = [int(file[0].split('-')[0]), int(file[0].split('-')[1])]
+            ids.remove(current_user.id)
+            ids = int(ids[0])
+            user = db_sess.query(User).filter(User.id == ids).first()
+            filepath = directory + '/' + file_name
+            with open(filepath, 'r', encoding='utf-8') as file:
+                messages1 = file.readlines()
+            print(messages1)
+            if messages1:
+                chats.append(
+                    [datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime("%d %B %Y %H:%M"), user,
+                     messages1[-1].split(':', 2)[-1], int(messages1[-1].split(':', 2)[1]),
+                     ids])
+        chats.sort(key=lambda x: x[0], reverse=True)
+    return render_template('chat.html', messages=messages[::-1], product=product, url=current_url,
+                           form=form, chats=chats)
 
 
 @application.route('/personal_account')

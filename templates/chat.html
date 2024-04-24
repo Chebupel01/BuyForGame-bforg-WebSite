@@ -1,0 +1,74 @@
+{% extends "index.html" %}
+{% block content %}
+{% if form.message.data == '' %}
+    <script>
+        function resetMessage() {
+            document.getElementById('myForm').reset(); // Сброс значений всех полей формы
+        }
+    </script>
+{% endif %}
+<h1 class="games-label"></h1>
+<div class="store-body">
+    <div>
+        <div class="all-chats1">
+        {% for chat in chats %}
+            <button class="chat-button" onclick="redirectToChat('/chat/{{ chat[4] }}')">
+                <div class="chats-chat">
+                    <a><img class="chat-icon1" src="/static/images/users-icons/{{ chat[1].user_icon }}"></a>
+                    <div class="column">
+                        <div>
+                            <span class="chat-opponent">
+                                {{ chat[1].nickname }}
+                            </span>
+                            <span class="chat-time">
+                                {{ chat[0] }}
+                            </span>
+                        </div>
+                        {% if chat[3] == current_user.id %}
+                            <span class="last-message">
+                                Вы: {{ chat[2] }}
+                            </span>
+                        {% else %}
+                            <span class="last-message">
+                                {{ chat[1].nickname }}: {{ chat[2] }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </button>
+        {% endfor %}
+        </div>
+    </div>
+    <div>
+        <div class="chat">
+            {% for mes in messages %}
+            {% if current_user.id == mes.split(':', 2)[1] | int %}
+            <div class="current-user-wrapper">
+            <span class="current-user-message">{{ mes.split(':', 2)[-1] }}</span><a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><br>
+            </div>
+            {% else %}
+            <div class="seller-user-wrapper">
+            <a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ product.user.user_icon }}"></a><span class="seller-user-message">{{ mes.split(':', 2)[-1] }}</span><br>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="message-field">
+            {% if current_user.is_authenticated %}
+                <form id="myForm" class="message-form" method="post" action="" onsubmit="">
+                    {{ form.hidden_tag() }}
+                    {{ form.message(class="message-input") }}
+                    <div>
+                        <button type="submit" class="send-button"><ion-icon class="send-icon" name="arrow-forward-circle"></ion-icon></button>
+                    </div>
+                </form>
+                <button class="send-button" onclick="redirectToChat({{ product.id }})">
+                    <ion-icon class="send-icon" name="sync-outline"></ion-icon>
+                </button>
+            {% endif %}
+        </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
