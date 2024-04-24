@@ -247,12 +247,12 @@ def upload(id):
         db_sess.commit()
 
 
-'''******'''
+'''******
 @application.route('/search/<str:game>')
 def search():
     db_sess = db_session.create_session()
     profile = db_sess.query(Games).filter(Games.game_name == name).first()
-    return render_template('personal_account.html', profile=profile)
+    return render_template('personal_account.html', profile=profile)'''
 
 @application.route('/about_us')
 def about():
