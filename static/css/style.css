@@ -10,7 +10,6 @@ body {
   background-color: #0b0b64;
   background-size: cover;
   background-position: center;
-  background-image: url("/static/images/system-images/background.png");
   background-size: 80% auto;
   backdrop-filter: blur(2px);
   background-attachment: fixed;
