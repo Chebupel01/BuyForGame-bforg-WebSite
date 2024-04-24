@@ -109,7 +109,7 @@ def products(id):
     return render_template('products.html', ads=ads, game=game, sort_by=sort_by, store_format=store_format,
                            products=products)
 
-"""
+
 @application.route('/product/<int:id>', methods=['GET', 'POST'])
 def product(id):
     form = MesForm()
@@ -146,6 +146,7 @@ def product(id):
 
 @application.route('/chats')
 def chats():
+    directory = 'C:/Users/miron/PycharmProjects/BuyForGame-bforg-WebSite/static/chats'
     files = os.listdir(directory)
     chats = []
     db_sess = db_session.create_session()
@@ -196,7 +197,7 @@ def chat(id):
             messages = file.readlines()
     current_url = request.url
     form.message.data = ''
-    directory = 'static/chats'
+    directory = 'C:/Users/miron/PycharmProjects/BuyForGame-bforg-WebSite/static/chats'
     files = os.listdir(directory)
     chats = []
     db_sess = db_session.create_session()
@@ -219,7 +220,7 @@ def chat(id):
                      ids])
         chats.sort(key=lambda x: x[0], reverse=True)
     return render_template('chat.html', messages=messages[::-1], product=product, url=current_url,
-                           form=form, chats=chats)"""
+                           form=form, chats=chats)
 
 
 @application.route('/personal_account')
@@ -235,7 +236,7 @@ def logout():
     logout_user()
     return redirect("/")
 
-'''******
+'''******'''
 @application.route('/upload_photo/<int:id>')
 def upload(id):
     f = request.files['file']
@@ -243,7 +244,7 @@ def upload(id):
     profile = db_sess.query(User).filter(User.id == id, current_user.id == User.id).first()
     if profile['user-icon'] == 'default-icon.png':
         profile['user-icon'] = f'icon-{id}.png'
-        db_sess.commit()'''
+        db_sess.commit()
 
 
 '''******
@@ -253,7 +254,7 @@ def search():
     profile = db_sess.query(Games).filter(Games.game_name == name).first()
     return render_template('personal_account.html', profile=profile)'''
 
-"""@application.route('/about_us')
+@application.route('/about_us')
 def about():
     text = '''Приветствую всех тех кто зашел прочесть это сообщение!
 Мы писали эту программу своей кровью и потом.
@@ -262,8 +263,9 @@ def about():
 но я считаю что не плохой для своего первого сайта.
 А вообще мы с васей ленивые ишаки.
 p.s. Человек на фото это михал николаич, который сам попросился в программу'''
-    return render_template('about.html', text=text)"""
+    return render_template('about.html', text=text)
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)
+    application.run(port=5000, host='127.0.0.1')
     serve(application, port=5000, host='0.0.0.0')
