@@ -5,7 +5,7 @@
     <div class="user-info">
         <img class="profile-icon" src="/static/images/users-icons/{{ profile.user_icon }}">
         <div class="column">
-            <span class="profile-nick">{{ profile.nickname }}</span>
+            <a href="{{ url_for('logout') }}"><span class="profile-nick">{{ profile.nickname }}</span></a>
             <span class="profile-rating">Рейтинг: {{ profile.seller_rating }}/5</span>
             {% if profile.id == current_user.id %}
             <a href="{{ url_for('upload') }}"><button class="edit-profile-icon">Изменить аватар профиля</button></a>

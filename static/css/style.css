@@ -808,7 +808,7 @@ td:hover a {
 
 .profile-nick {
   font-size: 36px;
-  color: blue;
+  color: white;
 }
 
 .row {
@@ -818,7 +818,7 @@ td:hover a {
 
 .profile-rating {
   font-size: 18px;
-  color: blue;
+  color: white;
 }
 
 .edit-profile-icon {
@@ -843,6 +843,7 @@ td:hover a {
 .profile-label {
   font-size: 26px;
   margin-left: 8px;
+  color: white;
 }
 
 .profile-balance-label {
