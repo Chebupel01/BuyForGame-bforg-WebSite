@@ -15,7 +15,9 @@
             <img src="/static/images/users-products/{{ product.product_photo }}">
             <br>
             <a href="{{ url_for('buy', id=product.id) }}"><button type="submit" class="buy-button">Купить</button></a>
-
+            {% if current_user.id == product.id_user or current_user.admin %}
+            <a href="{{ url_for('delete_product', id=product.id) }}"><button type="submit" class="buy-button">Удалить объявление</button></a>
+            {% endif %}
         </div>
     </div>
     <div class="chat-wrapper">

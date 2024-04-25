@@ -48,7 +48,7 @@ def load_user(user_id):
 
 @application.route('/')
 def home():
-    text_for_home = '''Тут кароче будет текст для только что зашедших пользователей'''
+    print(123)
     return render_template('home.html')
 
 
@@ -287,7 +287,8 @@ def add_game():
     if form.validate_on_submit():
         game_name = form.game_name.data
         file = request.files['file']
-        file.save(os.path.join(application.config['UPLOAD_FOLDER1'], f'{game_name.replace(' ', '')}.png'))
+        game_name = game_name.replace(' ', '')
+        file.save(os.path.join(application.config['UPLOAD_FOLDER1'], f'{game_name}.png'))
         game = Games()
         game.game_name = game_name
         db_sess = db_session.create_session()
@@ -360,6 +361,8 @@ def buy(id):
             db_sess.commit()
             product.user.balance += product.price * count
             db_sess.commit()
+            product.product_quantity -= count
+            db_sess.commit()
             return redirect(f"/product/{id}")
     return render_template('buy.html', ads=ads, form=form)
 
@@ -372,6 +375,14 @@ def about_us():
 def tutorials():
     return render_template('tutorials.html')
 
+
+@application.route('/delete_product/<int:id>')
+def delete_product(id):
+    db_sess = db_session.create_session()
+    product = db_sess.query(Ads).get(id)
+    db_sess.delete(product)
+    db_sess.commit()
+    return redirect("/store")
 
 if __name__ == '__main__':
     application.register_blueprint(ads_api.blueprint)

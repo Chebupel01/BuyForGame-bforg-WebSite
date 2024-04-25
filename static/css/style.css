@@ -7,7 +7,6 @@
 
 body {
   min-height: 100vh;
-  background: url('https://wallpapers.com/images/featured/minimalist-7xpryajznty61ra3.jpg');
   background-color: #0b0b64;
   background-size: cover;
   background-position: center;
@@ -195,7 +194,7 @@ input[type="password"] {
     min-height: 30vh;
     align-items: center;
     font-family: "Poppins", sans-serif;
-    color: #fff;
+    color: white;
     font-size: 48px;
 }
 
@@ -809,7 +808,7 @@ td:hover a {
 
 .profile-nick {
   font-size: 36px;
-  color: #fff;
+  color: blue;
 }
 
 .row {
@@ -819,7 +818,7 @@ td:hover a {
 
 .profile-rating {
   font-size: 18px;
-  color: #fff;
+  color: blue;
 }
 
 .edit-profile-icon {
