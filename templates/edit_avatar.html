@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="wrapper">
+<div class="form-box login">
+<h2>Изменить аватарку</h2>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>Выберите нужную фотографию</p>
+         <input type="file" name="file">
+        <button class="addBalanceBtn">Загрузить фото</button>
+        </div>
+    </div>
+    </form>
+{% endblock %}

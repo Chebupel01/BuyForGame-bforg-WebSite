@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="wrapper">
+<div class="form-box login">
+<h2>Добавить игру</h2>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            <p>Название игры</p>
+            {{ form.game_name(class="form-control") }}
+            {% for error in form.game_name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            <p>Название объявления</p>
+            {{ form.name(class="form-control") }}
+            {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            <p>Описание объявления</p>
+            {{ form.description(class="form-control") }}
+            {% for error in form.description.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            <p>Количество товара</p>
+            {{ form.product_quantity(class="form-control") }}
+            {% for error in form.product_quantity.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            <p>Цена товара</p>
+            {{ form.price(class="form-control") }}
+            {% for error in form.price.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>Загрузить картинку</a></p>
+         <input type="file" name="file">
+        <button class="loginBtn">Выставить товар</button>
+        </div>
+    </div>
+    </form>
+{% endblock %}

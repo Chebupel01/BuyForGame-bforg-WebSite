@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-<h1 class="games-label">Оформление заказа</h1>
+<h1 class="games-label">Товар</h1>
 <div class="store-body">
     <div class="product-review-wrapper">
         <div class="product-description">
@@ -12,7 +12,10 @@
             <br>
             <span class="count-text">Цена за шт: {{ product.price }} руб.</span>
             <br>
-            <span class="count-text">Купить: <input class="buy-count" type="number"> шт.</span><button class="buy-button">Купить</button>
+            <img src="/static/images/users-products/{{ product.product_photo }}">
+            <br>
+            <a href="{{ url_for('buy', id=product.id) }}"><button type="submit" class="buy-button">Купить</button></a>
+
         </div>
     </div>
     <div class="chat-wrapper">
@@ -21,11 +24,11 @@
             {% for mes in messages %}
                 {% if current_user.id == mes.split(':', 2)[1] | int %}
                     <div class="current-user-wrapper">
-                        <span class="current-user-message">{{ mes.split(':', 2)[-1] }}</span><a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><br>
+                        <span class="current-user-message">{{ mes.split(':', 2)[-1] }}</span><a href="{{ url_for('personal_account', id=mes.split(':', 2)[1] | int) }}"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><br>
                     </div>
-                {% elif product.id_user == mes.split(':', 2)[1] | int %}
+                {% else %}
                     <div class="seller-user-wrapper">
-                        <a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><span class="seller-user-message">{{ mes.split(':', 2)[-1] }}</span><br>
+                        <a href="{{ url_for('personal_account', id=mes.split(':', 2)[1] | int) }}"><img class="chat-icon" src="/static/images/users-icons/{{ product.user.user_icon }}"></a><span class="seller-user-message">{{ mes.split(':', 2)[-1] }}</span><br>
                     </div>
                 {% endif %}
             {% endfor %}

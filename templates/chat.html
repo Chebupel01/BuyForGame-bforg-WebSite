@@ -14,7 +14,7 @@
         {% for chat in chats %}
             <button class="chat-button" onclick="redirectToChat('/chat/{{ chat[4] }}')">
                 <div class="chats-chat">
-                    <a><img class="chat-icon1" src="/static/images/users-icons/{{ chat[1].user_icon }}"></a>
+                    <a href="{{ url_for('personal_account', id=chat[4]) }}"><img class="chat-icon1" src="/static/images/users-icons/{{ chat[1].user_icon }}"></a>
                     <div class="column">
                         <div>
                             <span class="chat-opponent">
@@ -42,15 +42,15 @@
     <div>
         <div class="chat">
             {% for mes in messages %}
-            {% if current_user.id == mes.split(':', 2)[1] | int %}
-            <div class="current-user-wrapper">
-            <span class="current-user-message">{{ mes.split(':', 2)[-1] }}</span><a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><br>
-            </div>
-            {% else %}
-            <div class="seller-user-wrapper">
-            <a href="#"><img class="chat-icon" src="/static/images/users-icons/{{ product.user.user_icon }}"></a><span class="seller-user-message">{{ mes.split(':', 2)[-1] }}</span><br>
-            </div>
-            {% endif %}
+                {% if current_user.id == mes.split(':', 2)[1] | int %}
+                    <div class="current-user-wrapper">
+                        <span class="current-user-message">{{ mes.split(':', 2)[-1] }}</span><a href="{{ url_for('personal_account', id=mes.split(':', 2)[1] | int) }}"><img class="chat-icon" src="/static/images/users-icons/{{ current_user.user_icon }}"></a><br>
+                    </div>
+                {% else %}
+                    <div class="seller-user-wrapper">
+                        <a href="{{ url_for('personal_account', id=mes.split(':', 2)[1] | int) }}"><img class="chat-icon" src="/static/images/users-icons/{{ opponent.user_icon }}"></a><span class="seller-user-message">{{ mes.split(':', 2)[-1] }}</span><br>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         <div class="message-field">

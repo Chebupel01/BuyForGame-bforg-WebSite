@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="wrapper">
+<div class="form-box login">
+<h2>Пополнить баланс</h2>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            <p>Сумма пополнения</p>
+            {{ form.amount(class="form-control") }}
+            {% for error in form.amount.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <p>P.s. Касса работать не хочет, а значит наслаждаемся халявным балансом</p>
+        </p>
+        <button class="addBalanceBtn">Пополнить баланс</button>
+        </div>
+    </div>
+    </form>
+{% endblock %}

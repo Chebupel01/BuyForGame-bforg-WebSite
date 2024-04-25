@@ -14,6 +14,7 @@ class Ads(SqlAlchemyBase):
     id_game = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("games.id"))
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    product_photo = sqlalchemy.Column(sqlalchemy.String, nullable=True, default='NotPhoto.png')
     description = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     product_quantity = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     price = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)

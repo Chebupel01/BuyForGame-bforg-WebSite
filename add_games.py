@@ -10,7 +10,6 @@ app.config['SECRET_KEY'] = 'bforg-site_secret_key'
 
 
 game = Games()
-game.id_game = 0
 game.game_name = 'Albion Online'
 db_sess = db_session.create_session()
 db_sess.add(game)

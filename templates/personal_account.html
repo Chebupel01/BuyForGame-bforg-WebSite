@@ -1,6 +1,42 @@
 {% extends "index.html" %}
 {% block content %}
-                   <a href="#">Личный кабинет</a>
-                   <a href="#">Кошелёк</a>
-                   <a href="{{ url_for('logout') }}">Выйти</a>
+<h1 class="games-label">Персональный аккаунт</h1>
+<div class="store-body">>
+    <div class="user-info">
+        <img class="profile-icon" src="/static/images/users-icons/{{ profile.user_icon }}">
+        <div class="column">
+            <span class="profile-nick">{{ profile.nickname }}</span>
+            <span class="profile-rating">Рейтинг: {{ profile.seller_rating }}/5</span>
+            {% if profile.id == current_user.id %}
+            <a href="{{ url_for('upload') }}"><button class="edit-profile-icon">Изменить аватар профиля</button></a>
+            {% endif %}
+        </div>
+        <div class="column">
+            <span class="profile-label">Дата создания аккаунта: {{ profile.modified_date.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+            {% if profile.id == current_user.id %}
+            <span class="profile-label">Почта: {{ profile.email }}</span>
+            {% endif %}
+            {% if profile.admin %}
+            <span class="profile-label">Администратор: Да</span>
+            {% else %}
+            <span class="profile-label">Администратор: Нет</span>
+            {% endif %}
+        </div>
+        {% if profile.id == current_user.id %}
+        <div class="column">
+            <span class="profile-balance-label">
+                Баланс:
+            </span>
+            <span class="profile-balance-label">
+                {{ profile.balance }}
+            </span>
+            <a href="{{ url_for('add_balance', id=current_user.id) }}">
+                <button class="addBalanceBtn">
+                    Пополнить баланс
+                </button>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

@@ -24,6 +24,9 @@
             </div>
             </div>
             <div class="store-format">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('add_product') }}"><button class="product-placement-button">Выставить товар</button></a>
+            {% endif %}
             <div><a href="?sort_by={{sort_by}}&store_format=cards"><ion-icon class="sort-icon" name="grid-outline"></ion-icon></a></div>
             <div><a href="?sort_by={{sort_by}}&store_format=table"><ion-icon class="sort-icon" name="menu-outline"></ion-icon></a></div>
             </div>
@@ -32,10 +35,10 @@
         {% for product in products %}
         <div class="connect-product">
         <div class="product-wrapper">
-            <a href="{{ url_for('product', id=product.id) }}"><img class="product-photo" src="/static/images/users-products/1&1.jpg"></a>
+            <a href="{{ url_for('product', id=product.id) }}"><img class="product-photo" src="/static/images/users-products/{{ product.product_photo }}"></a>
         </div>
             <div>
-                <a href="#"><img class="seller-icon" src="/static/images/users-icons/{{ product.user.user_icon }}"></a>
+                <a href="{{ url_for('personal_account', id=product.id_user) }}"><img class="seller-icon" src="/static/images/users-icons/{{ product.user.user_icon }}"></a>
                 <span class="product-label">{{ product.name }}</span>
             </div>
             <div>
@@ -64,8 +67,8 @@
                 <td><a href="{{ url_for('product', id=product.id) }}">{{ product.description }}</a></td>
                 <td>{{ product.product_quantity }}</td>
                 <td>{{ product.price }}</td>
-                <td>{{ product.date }}</td>
-                <td><a href="#">{{ product.user.nickname }}</a></td>
+                <td>{{ product.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td><a href="{{ url_for('personal_account', id=product.id_user) }}">{{ product.user.nickname }}</a></td>
                 <td>{{ product.user.seller_rating }}/5</td>
               </tr>
               {% endfor %}

@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="wrapper">
+<div class="form-box login">
+<h2>Оформление заказа</h2>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            <p>Количество товара</p>
+            {{ form.amount(class="form-control") }}
+            {% for error in form.amount.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <button class="buyBtn">Оплатить</button>
+        </div>
+    </div>
+    </form>
+{% endblock %}

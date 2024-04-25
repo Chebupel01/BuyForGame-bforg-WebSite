@@ -12,7 +12,7 @@
     {% endfor %}
     {% if current_user.admin %}
     <div class="game-wrapper">
-        <a href="https://htmlacademy.ru">
+        <a href="{{ url_for('add_game') }}">
             <img class="game-logo" src="static/images/system-images/AddGameIcon.png">
         </a>
         <p class="game-text">Добавить игру</p>

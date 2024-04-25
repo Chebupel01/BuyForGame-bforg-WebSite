@@ -19,6 +19,11 @@
         }
     </script>
     <script>
+        function redirectToPage1() {
+            window.location.href = '/add_balance';
+        }
+    </script>
+    <script>
         function redirectToChat(url) {
             window.location.href = url;
         }
@@ -36,15 +41,16 @@
         <nav class="navbar">
             <a href="{{ url_for('home') }}">Главная</a>
             <a href="{{ url_for('store') }}">Магазин</a>
-            <a href="#">Руководства</a>
-            <a href="#">О нас</a>
+            <a href="{{ url_for('tutorials') }}">Руководства</a>
+            <a href="{{ url_for('about_us') }}">О нас</a>
             {% if current_user.is_authenticated %}
+
             <div class="balance">
                 <p>Баланс:</p>
-                <p>0 рублей</p>
+                <p>{{ current_user.balance }} рублей</p>
             </div>
-            <img class="user-icon" src="/static/images/users-icons/default-icon.png">
-            <a href="{{ url_for('logout') }}">{{ current_user.nickname }}</a>
+            <img class="user-icon" src="/static/images/users-icons/{{ current_user.user_icon }}">
+            <a href="{{ url_for('personal_account', id=current_user.id) }}">{{ current_user.nickname }}</a>
             <div class="fg">
             <button class="chat-button" onclick="redirectToPage()"><ion-icon class="sort-icon" name="chatbox-ellipses-outline"></ion-icon></button>
             </div>
