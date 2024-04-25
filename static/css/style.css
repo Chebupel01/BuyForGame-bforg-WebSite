@@ -850,6 +850,7 @@ td:hover a {
    font-size: 36px;
    margin-left: 25px;
    text-decoration: underline;
+   color: white;
 }
 
 .addBalanceBtn {
